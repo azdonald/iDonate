@@ -1,0 +1,45 @@
+<?php 
+
+function iDonate_schema() {
+    $schema[idonate] = array(
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => TRUE,
+            ),
+            'name' => array(
+                'type' => 'varchar',
+                'length' => 200,
+                'not null' => TRUE,
+            ),
+            'email'=> array(
+                'type' => 'varchar',
+                'length' => 200,
+                'not null' => TRUE,
+            ),
+            'amount' => array(
+                'type' => 'decimal',
+                'precision' => 10,
+                'scale'  => 2
+                'not null' => TRUE,
+            ),
+            'date_paid' => array(
+                'type' => 'varchar',
+                'mysql_type' => 'DATETIME',
+                'length' => 200,
+                'not null' => TRUE,
+            ),
+            'transaction_ref' => array(
+                'type' => 'varchar',
+                'length' => 200,
+                'not null' => FALSE,
+            ),
+            'status' => array(
+                'type' => 'varchar',
+                'length' => 20,
+                'not null' => TRUE,
+                'default' = 'N/A'
+            ),
+        )
+    )
+}

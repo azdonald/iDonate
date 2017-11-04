@@ -1,0 +1,9 @@
+iDonate.payments:
+    title: 'View Payments'
+    route_name: iDonate.payments
+    base_route: iDonate.payments
+
+iDonate.settings:
+    title: 'Settings'
+    route_name: iDonate.settings
+    base_route: iDonate.payments

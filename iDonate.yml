@@ -1,0 +1,5 @@
+name: iDonate
+type: module
+description: Enable people collect donations.
+package: Custom
+core: 8.x

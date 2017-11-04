@@ -1,0 +1,23 @@
+iDonate.settings:
+    path: 'admin/iDonate/settings'
+    defaults:
+      _form: '\Drupal\iDonate\Form\iDonateSettingsForm'
+      _title: 'iDonate Settings'
+    requirements:
+      _permission: 'administer iDonate'
+
+iDonate.payments:
+    path: 'admin/iDonate/payments'
+    defaults:
+      _controller: '\Drupal\iDonate\Controller\iDonateController::list'
+      _title: 'iDonate Payemnts'
+    requirements:
+      _permission: 'administer iDonate'
+
+iDonate.page:
+    path: '/iDonate'
+    defaults:
+      _form: '\Drupal\iDonate\Form\iDonatePaymentForm'
+      _title: 'iDonate'
+    requirements:
+      _permission: 'access content'
