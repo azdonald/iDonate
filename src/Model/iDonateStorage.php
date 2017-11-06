@@ -21,7 +21,7 @@ class iDonateStorage {
     }
     public function getPayments() {
         $this->query->select('iDonate', 'i');
-        $this->query-fields('i', ['id', 'name', 'email', 'amount', 'date_paid', 'transaction_ref','status']);
+        //$this->query->fields('i', ['id', 'name', 'email', 'amount', 'date_paid', 'transaction_ref','status']);
         $results = $this->query->execute()->fetchAll();
         return $results;
     }

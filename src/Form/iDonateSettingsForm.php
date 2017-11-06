@@ -6,6 +6,11 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 class iDonateSettingsForm extends ConfigFormBase {
+    protected function getEditableConfigNames() {
+        return [
+            'iDonate.settings',
+        ];
+    }
     public function getFormId() {
         return 'iDonate_admin_settings';
     }

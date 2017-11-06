@@ -20,7 +20,7 @@ function iDonate_schema() {
             'amount' => array(
                 'type' => 'decimal',
                 'precision' => 10,
-                'scale'  => 2
+                'scale'  => 2,
                 'not null' => TRUE,
             ),
             'date_paid' => array(
@@ -38,8 +38,8 @@ function iDonate_schema() {
                 'type' => 'varchar',
                 'length' => 20,
                 'not null' => TRUE,
-                'default' = 'N/A'
+                'default' => 'N/A'
             ),
         )
-    )
+    );
 }

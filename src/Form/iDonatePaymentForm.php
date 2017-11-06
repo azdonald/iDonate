@@ -44,7 +44,7 @@ class iDonatePaymentForm extends FormBase {
         );
         $db = new iDonateStorage();
         $db->savePaymentDetails($data);
-        $form_state['redirect'] = 'admin/content/bd_contact';        
+        $form_state['redirect'] = 'admin/iDonate/payments';        
         if ($db) {
             drupal_set_message("succesfully saved");
             return;
