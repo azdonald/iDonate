@@ -4,15 +4,15 @@ namespace Drupal\iDonate\Model;
 use Drupal\Core\Database\Database;
 
 class iDonateStorage {
-    private $query;
+    private $connection;
 
     public function __construct() {
-        $this->query = \Drupal::database();
+        $this->connection = \Drupal::database();
     }
 
     public function savePaymentDetails(array $data) {
         try {
-            $this->query->insert('idonate')->fields($data)->execute();
+            $this->connection->insert('idonate')->fields($data)->execute();
             return true;
         }catch(Exception $e) {
             error_log($e->getMessage());
@@ -20,9 +20,8 @@ class iDonateStorage {
         }
     }
     public function getPayments() {
-        $this->query->select('iDonate', 'i');
-        //$this->query->fields('i', ['id', 'name', 'email', 'amount', 'date_paid', 'transaction_ref','status']);
-        $results = $this->query->execute()->fetchAll();
+        $con = $this->connection->query('SELECT * FROM {idonate}');
+        $results = $con->fetchAll();
         return $results;
     }
 }

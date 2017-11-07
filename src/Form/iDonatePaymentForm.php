@@ -4,6 +4,7 @@ namespace Drupal\iDonate\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\iDonate\Model\iDonateStorage;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class iDonatePaymentForm extends FormBase {
 
@@ -44,12 +45,12 @@ class iDonatePaymentForm extends FormBase {
         );
         $db = new iDonateStorage();
         $db->savePaymentDetails($data);
-        $form_state['redirect'] = 'admin/iDonate/payments';        
+        $form_state->setRedirect('iDonate.page');       
         if ($db) {
-            drupal_set_message("succesfully saved");
+            drupal_set_message("Donation Successful");
             return;
         }
-        drupal_set_message("Saving failed");
+        drupal_set_message("Donation failed");
         return;     
     
     }

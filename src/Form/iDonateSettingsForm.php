@@ -28,6 +28,17 @@ class iDonateSettingsForm extends ConfigFormBase {
             '#title' => t('Api Key:'),
             '#required' => TRUE,
         );
+        $form['currency'] = array(
+            '#type'  => 'select',
+            '#title' => ('Currency'),
+            '#options' => array(
+                'CAD' => t('CAD'),
+                'USD' => t('USD'),
+                'GBP' => t('GBP'),
+                'EUR' => t('EUR'),
+            ),
+            '#required' => TRUE,
+        );
         $form['actions']['#type'] = 'actions';
         $form['actions']['submit'] = array(
           '#type' => 'submit',

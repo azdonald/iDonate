@@ -18,7 +18,7 @@ function iDonate_schema() {
                 'not null' => TRUE,
             ),
             'amount' => array(
-                'type' => 'decimal',
+                'type' => 'numeric',
                 'precision' => 10,
                 'scale'  => 2,
                 'not null' => TRUE,
@@ -39,7 +39,9 @@ function iDonate_schema() {
                 'length' => 20,
                 'not null' => TRUE,
                 'default' => 'N/A'
-            ),
-        )
+            ),            
+        ),
+        'primary key' => array('id'),
     );
+    return $schema;
 }
