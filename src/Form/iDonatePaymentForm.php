@@ -12,14 +12,34 @@ class iDonatePaymentForm extends FormBase {
         return 'payment_form';
     }
     public function buildForm(array $form, FormStateInterface $form_state) {
+        $config = \Drupal::config('iDonate.settings');
+        $mode = $config->get('mode');
+        $currency = $config->get('currency');
+        $publishableKey = $config->get('test publishable key');
+        $secretKey = $config->get('test secret key');        
+        if ($mode == 'PROD') {
+            $publishableKey = $config->get('publishable key');
+            $secretKey = $config->get('secret key'); 
+        }
+        \Stripe\Stripe::setApiKey($secretKey);
         if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $field=$form_state->getValues();
+            $token = $_POST['stripeToken'];
             $data = array(
-                'name' => $field['name'],
-                'email' => $field['email'],
-                'amount' => $field['amount'],
+                'name' => $_POST['name'],
+                'email' => $_POST['stripeEmail'],
+                'amount' => $_POST['amount'],
                 'date_paid' => date('Y-m-d H:i:s'),
             );
+            $customer = \Stripe\Customer::create(array(
+                "source" => $token,
+                "description" => "Donation from ".$data['name'])
+              );
+            $charge = \Stripe\Charge::create(array(
+                "amount" => 1000,
+                "currency" => $currency,
+                "description" => "Donation from ".$data['name'],
+                "source" => $customer->id,
+              ));
             $db = new iDonateStorage();
             $db->savePaymentDetails($data);
             $form_state->setRedirect('iDonate.page');       
@@ -28,8 +48,9 @@ class iDonatePaymentForm extends FormBase {
                 return;
             }
             drupal_set_message("Donation failed");
-            return;     
-    }
+            return;    
+        }
+       
         $form['name'] = array(
             '#type'  => 'textfield',
             '#title' => t('Full Name:'),
@@ -54,25 +75,25 @@ class iDonatePaymentForm extends FormBase {
                 'id' => 'amount',
                 ),
             
-        );     
-        $config = \Drupal::config('iDonate.settings');        
-        $apiKey = $config->get('apikey');
+        );   
+        $form[]['#attached']['library'][] = 'iDonate/iDonate';  
         $form['container'] = array(
             '#type' => 'container',
             '#weight' => 5,
             '#states' => array(
                 'visible' => array(
-                  ':input[name="name"]' => array(
-                    'filled' => TRUE,
-                    ),
+                  ':input[name="name"]' => array('filled' => TRUE,),                  
+                  ':input[name="email"]' => array('filled' => TRUE,),                  
+                  ':input[name="amount"]' => array('filled' => TRUE,),
               ),
             ),           
-          );       
+        );    
         $form['container']['checkout'] = array(            
             '#type' => 'inline_template',
             '#template' => ' <script            
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key='.$apiKey.'
+            data-key='.$publishableKey.'
+            data-email=""
             data-name="Stripe.com"
             data-description="iDonate"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
